@@ -1,19 +1,19 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const url = require('url');
 const windows = [];
 let mainWindow;
 const { showSaveDialog } = require('./electron-dialogs.js');
 
 function createBrowserWindow(options) {
     let win = new BrowserWindow(Object.assign({
-        width: 800,
-        height: 600,
+        width: 900,
+        height: 800,
         show: false,
         titleBarStyle: 'hidden'
     }, options));
 
     windows.push(win);
-    // win.loadURL(path.join('file://', __dirname, 'index.html'));
     const indexURL = process.env.ELECTRON_START_URL || url.format({
         pathname: path.join(__dirname, '../build/index.html'),
         protocol: 'file',
