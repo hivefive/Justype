@@ -4,5 +4,5 @@
 Steps:
 1. Clone repo
 2. Run ```npm install```
-3. Run ```npm run dev```
+3. Run ```npm start```
 4. Type or whatever!
