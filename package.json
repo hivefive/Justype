@@ -19,13 +19,14 @@
     "electron": "electron .",
     "electron-pack": "build --em.main=build/electron-starter.js",
     "electron-start": "node public/electron-wait",
-    "preelectron-pack": "npm run build"
+    "preelectron-pack": "yarn run build"
   },
   "devDependencies": {
     "electron": "^1.7.8",
     "electron-builder": "^19.35.1",
     "foreman": "^2.0.0",
-    "react-scripts": "1.0.14"
+    "react-scripts": "1.0.14",
+    "sass": "^1.0.0-beta.2"
   },
   "build": {
     "appId": "com.example.JusTYPE",

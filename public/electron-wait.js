@@ -11,7 +11,8 @@ const tryConnection = () => client.connect({port: port}, () => {
     if (!startedElectron) {
         console.log('Starting Electron!');
         const exec = require('child_process').exec;
-        exec('npm run electron');
+        exec('yarn run electron');
+        exec("yarn run sass --watch src:src");
         startedElectron = true;
     }
 });
