@@ -1,6 +1,8 @@
 const { app, Menu } = require('electron');
 const isWindows = process.platform === "win32";
 const { showSaveDialog, showOpenDialog } = require('./electron-dialogs');
+const fs = require('fs');
+const pdfkit = require('pdfkit');
 
 module.exports = {
 	setMainMenu
@@ -24,6 +26,22 @@ function setMainMenu(mainWindow) {
                     accelerator: isWindows ? "Ctrl+S" : "Cmd+S",
                     click() {
                         mainWindow.send('save-file', mainWindow)
+                    }
+                },
+                {
+                    label: "Export PDF",
+                    accelerator: isWindows ? "Ctrl+Shift+S" : "Cmd+Shift+S",
+                    click() {
+                        // win.webContents.printToPDF({}, (error, data) => {
+                        //         if (error) throw error;
+                        //         fs.writeFile("/tmp/print.pdf", data, error => {
+                        //             if (error) throw error;
+                        //             console.log("Write PDF successfully.");
+                        //         });
+                        //     }
+                        // );
+                        mainWindow.send('export-pdf', mainWindow);
+
                     }
                 },
                 {

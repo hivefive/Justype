@@ -1,8 +1,9 @@
 const { dialog, app, nativeImage } = require('electron');
 const fs = require('fs');
 const path = require('path');
+const PDFDocument = require('pdfkit');
 
-module.exports = { showSaveDialog, showOpenDialog };
+module.exports = { showSaveDialog, showOpenDialog, showPDFDialog };
 
 function showSaveDialog(browserWindow, props) {
     let fullText = props.typedTitle + "\n" + props.typedText;
@@ -19,6 +20,32 @@ function showSaveDialog(browserWindow, props) {
             });
         }
     });
+}
+
+function showPDFDialog(browserWindow, props) {
+    let fullText = props.typedTitle + props.typedText;
+    dialog.showSaveDialog(browserWindow, {
+        defaultPath: 'text.pdf'
+    }, (filename) => {
+        doc = new PDFDocument();
+
+        doc.pipe(fs.createWriteStream(filename));
+
+        doc.fontSize(45)
+            .font('Times-Roman')
+            .text(props.typedTitle)
+            .moveDown(0.5);
+
+        doc.fontSize(20)
+            .font('Times-Roman')
+            .text(props.typedText, {
+                width: 400
+            })
+            .moveDown(1);
+
+        doc.end();
+    });
+
 }
 
 function showOpenDialog(browserWindow) {

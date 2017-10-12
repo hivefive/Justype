@@ -1,9 +1,10 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const windows = [];
 let mainWindow;
-const { showSaveDialog, showOpenDialog } = require('./electron-dialogs.js');
+const { showSaveDialog, showOpenDialog, showPDFDialog } = require('./electron-dialogs.js');
 const { setMainMenu } = require('./electron-nav');
 // const App = require('../src/App');
 
@@ -26,22 +27,21 @@ function createBrowserWindow(options) {
     win.on('ready-to-show', () => {
         win.show();
         ipcMain.on('save-text', (event, props) => {
-            event.sender.send("save", "save");
             showSaveDialog(win, props);
         });
-        // ipcMain.on('open-text', (event, props) => {
-        //     event.sender.send("open", "OPEN");
-        //     showOpenDialog(win, props);
-        // });
-        // ipcMain.on('file-content', fileData => {
-        //     dialog.showErrorBox("fileContent", fileData);
-        //     let title = fileData.subString(0, fileData.indexOf('\n'));
-        //     let text = fileData.subString(fileData.indexOf('\n'));
-        //     this.setState({
-        //         textTitle: title,
-        //         textContent: text
-        //     });
-        // });
+        ipcMain.on('save-pdf', (event, props) => {
+            console.log("HELLO");
+            showPDFDialog(win, props);
+            // win.webContents.printToPDF({}, (error, data) => {
+			// 		if (error) throw error;
+			// 		fs.writeFile("/tmp/print.pdf", data, error => {
+            //             console.log(data);
+			// 			if (error) throw error;
+			// 			console.log("Write PDF sucdessfully.");
+			// 		});
+			// 	}
+			// );
+        });
     });
 
     setMainMenu(win);

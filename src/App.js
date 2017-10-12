@@ -8,15 +8,23 @@ const ipcRenderer = electron.ipcRenderer;
 function saveText () {
   let pageTitle = document.querySelector('#typed-title');
   let textBox = document.querySelector('#typed-text');
-    console.log(textBox.value);
-    ipcRenderer.send('save-text', {
-        typedTitle: pageTitle.value, 
-        typedText: textBox.value,
-    });
+  ipcRenderer.send('save-text', {
+      typedTitle: pageTitle.value, 
+      typedText: textBox.value,
+  });
 }
 
 function openText () {
   ipcRenderer.send('open-text');
+}
+
+function exportPDF () {
+  let pageTitle = document.querySelector("#typed-title");
+	let textBox = document.querySelector("#typed-text");
+	ipcRenderer.send('save-pdf', {
+		typedTitle: pageTitle.value,
+		typedText: textBox.value
+	});
 }
 
 
@@ -33,8 +41,6 @@ class App extends Component {
   }
 
   handleFileContent(content) {
-    console.log(typeof content);
-    console.log(content);
     let title = content.substring(0, content.indexOf("\n"));
     let text = content.substring(content.indexOf("\n") + 1);
     this.setState({ textTitle: title, textContent: text });
@@ -46,6 +52,9 @@ class App extends Component {
     });
     ipcRenderer.on("save-file", (event, args) => {
       saveText();
+    });
+    ipcRenderer.on("export-pdf", (event, args) => {
+      exportPDF();
     });
   }
 
@@ -64,17 +73,15 @@ class App extends Component {
 
   render() {
     return <div className="App">
-      <textarea name="pageTitle" id="typed-title" placeholder="Title" 
+			<textarea name="pageTitle" id="typed-title" placeholder="Title" 
       value={this.state.textTitle} 
-      onInput={this.updateTitle}
-      />
-			<textarea name="typedText" 
-      id="typed-text" cols="30" 
-      rows="10" placeholder="Text" 
+      onInput={this.updateTitle} />
+			<textarea name="typedText" id="typed-text" cols="30" rows="10" placeholder="Text" 
       value={this.state.textContent} 
-      onInput={this.updateContent}
-      />
-			<button onClick={saveText} id="save-btn">Save</button>
+      onInput={this.updateContent} />
+			<button onClick={saveText} id="save-btn">
+				Save
+			</button>
 		</div>;
   }
 }

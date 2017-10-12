@@ -1,6 +1,5 @@
 $dark: #444;
 
-
 body {
   margin: 0;
   padding: 0;
@@ -59,35 +58,11 @@ body {
   background-color: transparent;
   border: none;
   color: $dark;
+  &:focus, &:active {
+    border: none;
+    color: #444444;
+    outline: none;
+  }
 }
 
-#save-btn:focus, #save-btn:active {
-  border: none;
-  color: #444444;
-  outline: none;
-}
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
