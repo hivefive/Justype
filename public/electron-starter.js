@@ -6,7 +6,6 @@ const windows = [];
 let mainWindow;
 const { showSaveDialog, showOpenDialog, showPDFDialog } = require('./electron-dialogs.js');
 const { setMainMenu } = require('./electron-nav');
-// const App = require('../src/App');
 
 function createBrowserWindow(options) {
     let win = new BrowserWindow(Object.assign({
@@ -30,17 +29,7 @@ function createBrowserWindow(options) {
             showSaveDialog(win, props);
         });
         ipcMain.on('save-pdf', (event, props) => {
-            console.log("HELLO");
             showPDFDialog(win, props);
-            // win.webContents.printToPDF({}, (error, data) => {
-			// 		if (error) throw error;
-			// 		fs.writeFile("/tmp/print.pdf", data, error => {
-            //             console.log(data);
-			// 			if (error) throw error;
-			// 			console.log("Write PDF sucdessfully.");
-			// 		});
-			// 	}
-			// );
         });
     });
 

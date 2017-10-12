@@ -32,14 +32,6 @@ function setMainMenu(mainWindow) {
                     label: "Export PDF",
                     accelerator: isWindows ? "Ctrl+Shift+S" : "Cmd+Shift+S",
                     click() {
-                        // win.webContents.printToPDF({}, (error, data) => {
-                        //         if (error) throw error;
-                        //         fs.writeFile("/tmp/print.pdf", data, error => {
-                        //             if (error) throw error;
-                        //             console.log("Write PDF successfully.");
-                        //         });
-                        //     }
-                        // );
                         mainWindow.send('export-pdf', mainWindow);
 
                     }
